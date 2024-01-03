@@ -23,6 +23,8 @@ logger:
 captive_portal:
 
 # web_server:  # Please note that enabling this component will take up a lot of memory and may decrease stability, especially on ESP8266.
+web_server:
+  port: 80
 
 uart:
   # https://esphome.io/components/uart.html#uart
