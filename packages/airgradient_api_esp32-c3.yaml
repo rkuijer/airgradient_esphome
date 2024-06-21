@@ -55,5 +55,6 @@ esphome:
               wifi: !lambda return to_string(-50);
 
 http_request:
+  verify_ssl: false
   # Used to support POST request to send data to AirGradient
   # https://esphome.io/components/http_request.html
