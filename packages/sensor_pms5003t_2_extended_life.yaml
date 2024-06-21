@@ -1,0 +1,111 @@
+# Used for a second PMS5003T in the same device, such as the Open Air O-1PPT
+substitutions:
+  pm_update_interval: "2min"
+
+sensor:
+  - platform: pmsx003
+    # PMS5003T with temperature and humidity https://esphome.io/components/sensor/pmsx003.html
+    type: PMS5003T
+    uart_id: senseair_s8_uart
+    pm_2_5:
+      name: "PM 2.5 (2)"
+      id: pm_2_5_2
+      device_class: pm25  # Added to report properly to HomeKit
+    pm_1_0:
+      name: "PM 1.0 (2)"
+      id: pm_1_0_2
+      device_class: pm1  # Added to report properly to HomeKit
+    pm_10_0:
+      name: "PM 10.0 (2)"
+      id: pm_10_0_2
+      device_class: pm10  # Added to report properly to HomeKit
+    pm_0_3um:
+      name: "PM 0.3 (2)"
+      id: pm_0_3um_2
+    temperature:
+      name: "Temperature (2)"
+      id: temp_2
+      icon: "mdi:thermometer"
+      filters:
+          # https://forum.airgradient.com/t/outdoor-temperature-and-humidity-reading-correction/1544/19
+        - lambda: !lambda |-
+            if (x < 10.0) return (x * 1.327) - 6.738;
+            return (x * 1.181) - 5.113;
+    humidity:
+      name: "Humidity (2)"
+      id: humidity_2
+      icon: "mdi:water-percent"
+      filters:
+          # Compensation algorithm from AirGradient's research 2024-02-29
+          # Ensuring max is 100% as calculation can exceed
+        - lambda: |-
+            float result = x * 1.259f + 7.34f;
+            if (result > 100) return 100;
+            return result;
+    update_interval: $pm_update_interval
+
+# Average the readings from both sensors to return a value
+  - platform: template
+    id: pm_2_5_avg
+    name: "PM 2.5 (Average)"
+    lambda: return (id(pm_2_5).state + id(pm_2_5_2).state) / 2.0;
+    device_class: pm25
+    unit_of_measurement: µg/m³
+    icon: mdi:chemical-weapon
+    accuracy_decimals: 0
+    state_class: measurement
+    update_interval: $pm_update_interval
+
+  - platform: template
+    id: pm_1_0_avg
+    name: "PM 1.0 (Average)"
+    lambda: return (id(pm_1_0).state + id(pm_1_0_2).state) / 2.0;
+    device_class: pm1
+    unit_of_measurement: µg/m³
+    icon: mdi:chemical-weapon
+    accuracy_decimals: 0
+    state_class: measurement
+    update_interval: $pm_update_interval
+
+  - platform: template
+    id: pm_10_0_avg
+    name: "PM 10.0 (Average)"
+    lambda: return (id(pm_10_0).state + id(pm_10_0_2).state) / 2.0;
+    device_class: pm10
+    unit_of_measurement: µg/m³
+    icon: mdi:chemical-weapon
+    accuracy_decimals: 0
+    state_class: measurement
+    update_interval: $pm_update_interval
+
+  - platform: template
+    id: pm_0_3um_avg
+    name: "PM 0.3 (Average)"
+    lambda: return (id(pm_0_3um).state + id(pm_0_3um_2).state) / 2.0;
+    unit_of_measurement: /dL
+    icon: mdi:chemical-weapon
+    accuracy_decimals: 0
+    state_class: measurement
+    update_interval: $pm_update_interval
+
+  - platform: template
+    id: temp_avg
+    name: "Temperature (Average)"
+    lambda: return (id(temp).state + id(temp_2).state) / 2.0;
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+    icon: mdi:thermometer
+    update_interval: $pm_update_interval
+
+  - platform: template
+    id: humidity_avg
+    name: "Humidity (Average)"
+    lambda: return (id(humidity).state + id(humidity_2).state) / 2.0;
+    unit_of_measurement: '%'
+    accuracy_decimals: 1
+    device_class: humidity
+    state_class: measurement
+    icon: mdi:water-percent
+    update_interval: $pm_update_interval

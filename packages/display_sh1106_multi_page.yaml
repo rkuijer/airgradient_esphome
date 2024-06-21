@@ -11,24 +11,6 @@ font:
     id: open_sans_20
     size: 20
     glyphs: '!"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz/µ³'
-  - file:
-      type: gfonts
-      family: Poppins
-      weight: light
-    id: poppins_light
-    size: 14
-    glyphs: '!"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz/µ³'
-  - file:
-      type: gfonts
-      family: Poppins
-      weight: light
-    id: poppins_light_12
-    size: 12
-    glyphs: '!"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz/µ³'
-  - file: "gfonts://Ubuntu Mono"
-    id: ubuntu
-    size: 22
-    glyphs: '!"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz/µ³'
 
 
 display:
@@ -66,71 +48,70 @@ display:
         lambda: |-
           it.printf(0, 0, id(open_sans_14), "ID:");
           it.printf(128, 0, id(open_sans_14), TextAlign::TOP_RIGHT, "%s", get_mac_address().c_str());
-          it.printf(0, 21, id(open_sans_14), "Config Ver: $ag_esphome_config_version");
-          it.printf(0, 42, id(open_sans_14), "$friendly_devicename");
+          it.printf(0, 21, id(open_sans_14), "Config Ver: $config_version");
+          it.printf(0, 42, id(open_sans_14), "$friendly_name");
       - id: summary1
         lambda: |-
-          it.printf(0, 0, id(poppins_light), "CO2:");
-          it.printf(128, 0, id(poppins_light), TextAlign::TOP_RIGHT, "%.0f ppm", id(co2).state);
-          it.printf(0, 16, id(poppins_light), "PM2.5:");
-          it.printf(128, 16, id(poppins_light), TextAlign::TOP_RIGHT, "%.0f µg/m³", id(pm_2_5).state);
-          it.printf(0, 32, id(poppins_light), "Temp:");
+          it.printf(0, 0, id(open_sans_14), "CO2:");
+          it.printf(128, 0, id(open_sans_14), TextAlign::TOP_RIGHT, "%.0f ppm", id(co2).state);
+          it.printf(0, 16, id(open_sans_14), "PM2.5:");
+          it.printf(128, 16, id(open_sans_14), TextAlign::TOP_RIGHT, "%.0f µg/m³", id(pm_2_5).state);
+          it.printf(0, 32, id(open_sans_14), "Temp:");
           if (id(display_in_f).state) {
-            it.printf(128, 32, id(poppins_light), TextAlign::TOP_RIGHT, "%.1f°F", id(temp).state*9/5+32);
+            it.printf(128, 32, id(open_sans_14), TextAlign::TOP_RIGHT, "%.1f°F", id(temp).state*9/5+32);
           } else {
-            it.printf(128, 32, id(poppins_light), TextAlign::TOP_RIGHT, "%.1f°C", id(temp).state);
+            it.printf(128, 32, id(open_sans_14), TextAlign::TOP_RIGHT, "%.1f°C", id(temp).state);
           }
-          it.printf(0, 48, id(poppins_light), "Humidity:");
-          it.printf(128, 48, id(poppins_light), TextAlign::TOP_RIGHT, "%.1f%%", id(humidity).state);
+          it.printf(0, 48, id(open_sans_14), "Humidity:");
+          it.printf(128, 48, id(open_sans_14), TextAlign::TOP_RIGHT, "%.1f%%", id(humidity).state);
       - id: summary2
         lambda: |-
-          it.printf(0, 0, id(poppins_light), "CO2:");
-          it.printf(128, 0, id(poppins_light), TextAlign::TOP_RIGHT, "%.0f ppm", id(co2).state);
-          it.printf(0, 16, id(poppins_light), "PM2.5:");
-          it.printf(128, 16, id(poppins_light), TextAlign::TOP_RIGHT, "%.0f µg/m³", id(pm_2_5).state);
-          it.printf(0, 32, id(poppins_light), "VOC:");
-          it.printf(128, 32, id(poppins_light), TextAlign::TOP_RIGHT, "%.0f", id(voc).state);
-          it.printf(0, 48, id(poppins_light), "NOx:");
-          it.printf(128, 48, id(poppins_light), TextAlign::TOP_RIGHT, "%.0f", id(nox).state);
+          it.printf(0, 0, id(open_sans_14), "CO2:");
+          it.printf(128, 0, id(open_sans_14), TextAlign::TOP_RIGHT, "%.0f ppm", id(co2).state);
+          it.printf(0, 16, id(open_sans_14), "PM2.5:");
+          it.printf(128, 16, id(open_sans_14), TextAlign::TOP_RIGHT, "%.0f µg/m³", id(pm_2_5).state);
+          it.printf(0, 32, id(open_sans_14), "VOC:");
+          it.printf(128, 32, id(open_sans_14), TextAlign::TOP_RIGHT, "%.0f", id(voc).state);
+          it.printf(0, 48, id(open_sans_14), "NOx:");
+          it.printf(128, 48, id(open_sans_14), TextAlign::TOP_RIGHT, "%.0f", id(nox).state);
       - id: air_quality
         lambda: |-
-          it.printf(0, 6, id(ubuntu), "CO2");
-          it.printf(128, 6, id(ubuntu), TextAlign::TOP_RIGHT, "%.0f ppm", id(co2).state);
-          it.printf(0, 34, id(ubuntu), "PM2");
-          it.printf(128, 34, id(ubuntu), TextAlign::TOP_RIGHT, "%.0f µg/m³", id(pm_2_5).state);
+          it.printf(0, 13, id(open_sans_14), "CO2");
+          it.printf(128, 6, id(open_sans_20), TextAlign::TOP_RIGHT, "%.0f ppm", id(co2).state);
+          it.printf(0, 41, id(open_sans_14), "PM2");
+          it.printf(128, 34, id(open_sans_20), TextAlign::TOP_RIGHT, "%.0f µg/m³", id(pm_2_5).state);
       - id: air_temp
         lambda: |-
-          it.printf(0, 6, id(ubuntu), "Temp");
+          it.printf(0, 13, id(open_sans_14), "Temp");
           if (id(display_in_f).state) {
-            it.printf(128, 6, id(ubuntu), TextAlign::TOP_RIGHT, "%.1f°F", id(temp).state*9/5+32);
+            it.printf(128, 6, id(open_sans_20), TextAlign::TOP_RIGHT, "%.1f°F", id(temp).state*9/5+32);
           } else {
-            it.printf(128, 6, id(ubuntu), TextAlign::TOP_RIGHT, "%.1f°C", id(temp).state);
+            it.printf(128, 6, id(open_sans_20), TextAlign::TOP_RIGHT, "%.1f°C", id(temp).state);
           }
-          it.printf(0, 34, id(ubuntu), "Humid");
-          it.printf(128, 34, id(ubuntu), TextAlign::TOP_RIGHT, "%.1f%%", id(humidity).state);
+          it.printf(0, 41, id(open_sans_14), "Humid");
+          it.printf(128, 34, id(open_sans_20), TextAlign::TOP_RIGHT, "%.1f%%", id(humidity).state);
       - id: air_voc
         lambda: |-
-          it.printf(0, 6, id(ubuntu), "VOC:");
-          it.printf(128, 6, id(ubuntu), TextAlign::TOP_RIGHT, "%.0f", id(voc).state);
-          it.printf(0, 34, id(ubuntu), "NOx:");
-          it.printf(128, 34, id(ubuntu), TextAlign::TOP_RIGHT, "%.0f", id(nox).state);
+          it.printf(0, 6, id(open_sans_20), "VOC:");
+          it.printf(128, 6, id(open_sans_20), TextAlign::TOP_RIGHT, "%.0f", id(voc).state);
+          it.printf(0, 34, id(open_sans_20), "NOx:");
+          it.printf(128, 34, id(open_sans_20), TextAlign::TOP_RIGHT, "%.0f", id(nox).state);
       - id: combo
         lambda: |-
           if (id(display_in_f).state) {
-            it.printf(0, 0, id(poppins_light_12), "%.1f °F", id(temp).state*9/5+32);
+            it.printf(0, 0, id(open_sans_14), "%.1f °F", id(temp).state*9/5+32);
           } else {
-            it.printf(0, 0, id(poppins_light_12), "%.1f °C", id(temp).state);
+            it.printf(0, 0, id(open_sans_14), "%.1f °C", id(temp).state);
           }
-          it.printf(128, 0, id(poppins_light_12), TextAlign::TOP_RIGHT, "%.1f%%", id(humidity).state);
-          it.printf(0, 16, id(poppins_light_12), "%.0f µg", id(pm_2_5).state);
-          it.printf(128, 16, id(poppins_light_12), TextAlign::TOP_RIGHT, "%.0f ppm", id(co2).state);
-          it.printf(0, 32, id(poppins_light_12), "VOC: %.0f", id(voc).state);
-          it.printf(128, 32, id(poppins_light_12), TextAlign::TOP_RIGHT, "NOx: %.0f", id(nox).state);
-          it.printf(0, 48, id(poppins_light_12), "AQI: %.0f", id(pm_2_5_aqi).state);
+          it.printf(128, 0, id(open_sans_14), TextAlign::TOP_RIGHT, "%.1f%%", id(humidity).state);
+          it.printf(0, 16, id(open_sans_14), "%.0f µg/m³", id(pm_2_5).state);
+          it.printf(128, 16, id(open_sans_14), TextAlign::TOP_RIGHT, "%.0f ppm", id(co2).state);
+          it.printf(0, 32, id(open_sans_14), "VOC: %.0f", id(voc).state);
+          it.printf(128, 32, id(open_sans_14), TextAlign::TOP_RIGHT, "NOx: %.0f", id(nox).state);
+          it.printf(0, 48, id(open_sans_14), "AQI: %.0f", id(pm_2_5_aqi).state);
       - id: blank
         lambda: |-
-          it.printf(0, 0, id(open_sans_14), "");
-
+          it.printf(0, 0, id(open_sans_14), " ");
 
     on_page_change:
       - to: airgradient_default
@@ -198,6 +179,7 @@ display:
                 - display.page.show_next: oled_display
                 - component.update: oled_display
       - to: blank
+        # Skip blank page unless it is turned on and the interval: will only display it
         then:
           - if:
               condition:
@@ -218,14 +200,15 @@ interval:
         then:
           switch.turn_off: display_boot_page
   - interval: 5s
-    # Automatically switch to the next page every five seconds
+    # Automatically switch to the next page every five seconds if not set to blank
     then:
       - if:
-          # Always show boot screen if switch is enabled
           condition:
-              switch.is_on: display_boot_page
+            # If the blank page switch is on, only display the blank page, otherwise, rotate to next page
+            switch.is_on: display_blank_page
           then:
-            - display.page.show: boot
+            - display.page.show: blank
+            - component.update: oled_display
           else:
             # Change page on display
             - display.page.show_next: oled_display
@@ -304,3 +287,27 @@ switch:
     optimistic: True
     entity_category: config
     icon: "mdi:monitor"
+    on_turn_on:
+      - display.page.show: blank
+      - component.update: oled_display
+    on_turn_off:
+      - display.page.show_next: oled_display
+      - component.update: oled_display
+
+number:
+  - platform: template
+    # https://esphome.io/components/number/template.html
+    name: "Display Contrast %"
+    icon: "mdi:lightbulb"
+    id: display_contrast
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: 100
+    optimistic: true
+    restore_value: true
+    mode: slider
+    on_value:
+      then:
+        # https://www.reddit.com/r/Esphome/comments/sy1d1s/how_to_write_a_lamba_to_change_the_contrast_of/
+        lambda: id(oled_display).set_contrast(id(display_contrast).state / 100.0);

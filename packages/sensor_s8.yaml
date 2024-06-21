@@ -1,14 +1,18 @@
+substitutions:
+  co2_offset: '0'
+
 sensor:
   - platform: senseair
     # SenseAir S8 https://esphome.io/components/sensor/senseair.html
     # https://senseair.com/products/size-counts/s8-lp/
+    # https://climate.nasa.gov/vital-signs/carbon-dioxide/?intent=121
+    # https://senseair.com/the-senseair-abc-algorithm/
     co2:
       name: "CO2"
       id: co2
       filters:
-        - skip_initial: 2
-        - clamp:
-            min_value: 400  # 419 as of 2023-06 https://gml.noaa.gov/ccgg/trends/global.html
+        - skip_initial: 1  # Sometimes returns 0 at first boot instead of valid data
+        - offset: $co2_offset
     id: senseair_s8
     uart_id: senseair_s8_uart
 
@@ -33,7 +37,7 @@ button:
 
 switch:
   - platform: template
-    name: SenseAir S8 Automatic Background Calibration
+    name: SenseAir S8 Automatic Baseline Correction
     id: senseair_s8_abc_switch
     restore_mode: RESTORE_DEFAULT_ON
     optimistic: True
