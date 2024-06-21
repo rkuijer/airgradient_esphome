@@ -1,5 +1,8 @@
+
+# The sensor has a 3-minute warmup period where data is unreliable and ESPHome will only start publishing sensor values after this time.
 sensor:
   - platform: mics_4514
+    address: 0x75
     nitrogen_dioxide:
       name: Nitrogen Dioxide
     carbon_monoxide:
