@@ -1,3 +1,5 @@
+substitutions:
+  config_version: 4.0.2
 
 # board
 esphome:
@@ -12,6 +14,10 @@ esphome:
 
 esp32:
   board: esp32-c3-devkitm-1
+  # Testing upgrading from 5.4.0 which is current default
+  # framework:
+  #   type: arduino
+  #   version: 6.7.0
 
 # esp32_improv:  # Uses around 30% of available flash space due to loading BLE stack
 #   authorizer: none
@@ -48,9 +54,3 @@ i2c:
   sda: GPIO7 # Pin 21
   scl: GPIO6 # Pin 20
   frequency: 400kHz  # 400kHz eliminates warnings about components taking a long time other than SGP40 component: https://github.com/esphome/issues/issues/4717
-
-button:
-  - platform: factory_reset
-    disabled_by_default: true
-    name: "Factory Reset ESP"
-    id: factory_reset_all

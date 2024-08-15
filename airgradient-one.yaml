@@ -4,7 +4,7 @@
 substitutions:
   name: "ag-one"
   friendly_name: "AG One"
-  config_version: 2.0.5
+  config_version: 2.0.6
   name_add_mac_suffix: "false"  # Must have quotes around value
   ag_esphome_config_version: config_version
   friendly_devicename: friendly_name
@@ -23,11 +23,6 @@ wifi:
       static_ip: !secret ag_one_ip
       gateway: !secret wifi_not_gateway
       subnet: !secret wifi_not_subnet
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: ${name}
-    password: !secret esphome_fallback_password
-
 
 dashboard_import:
   package_import_url: github://rkuijer/airgradient_esphome/airgradient-one.yaml
@@ -35,6 +30,7 @@ dashboard_import:
 
 packages:
   board:              github://rkuijer/airgradient_esphome/packages/airgradient_esp32-c3_board.yaml
+  captive_portal:     github://rkuijer/airgradient_esphome/packages/captive_portal.yaml
   pm_2.5:             github://rkuijer/airgradient_esphome/packages/sensor_pms5003.yaml
   co2:                github://rkuijer/airgradient_esphome/packages/sensor_s8.yaml
   temp_humidity:      github://rkuijer/airgradient_esphome/packages/sensor_sht40.yaml
@@ -47,7 +43,6 @@ packages:
   config_button:      github://rkuijer/airgradient_esphome/packages/config_button.yaml
   wifi:               github://rkuijer/airgradient_esphome/packages/sensor_wifi.yaml
   uptime:             github://rkuijer/airgradient_esphome/packages/sensor_uptime.yaml
-  safe_mode:          github://rkuijer/airgradient_esphome/packages/switch_safe_mode.yaml
   mics_4514:          github://rkuijer/airgradient_esphome/packages/sensor_mics_4514.yaml
   
 

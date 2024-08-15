@@ -1,7 +1,4 @@
 ---
-# Impliments PM2.5 correction algorithm supported by AirGradient from EPA
-# https://www.airgradient.com/documentation/correction-algorithms/
-# https://document.airnow.gov/airnow-fire-and-smoke-map-questions-and-answers.pdf
 sensor:
   - platform: pmsx003
     # Default interval of updating every second, but changing to 30 seconds to extend life but keep fan spinning
@@ -12,27 +9,6 @@ sensor:
       name: "PM 2.5"
       id: pm_2_5
       device_class: pm25  # Added to report properly to HomeKit
-      filters:
-        - lambda: |-
-            float result = 0.0;
-            if (x == 0.0) {
-              result = 0.0;
-            } else if (x < 30.0) {
-              result = (0.524 * x) - (0.0862 * id(humidity).state) + 5.75;
-            } else if (x < 50.0) {
-              result = (0.786 * (x / 20 - 3/2) + 0.524 * (1 - (x / 20 - 3/2))) * x - (0.0862 * id(humidity).state) + 5.75;
-            } else if (x < 210.0) {
-              result = (0.786 * x) - (0.0862 * id(humidity).state) + 5.75;
-            } else if (x < 260.0) {
-              result = (0.69 * (x / 50 - 21/5) + 0.786 * (1 - (x / 50 - 21/5))) * x - (0.0862 * id(humidity).state * (1 - (x / 50 - 21/5))) + (2.966 * (x / 50 - 21/5)) + (5.75 * (1 - (x / 50 - 21/5))) + (8.84 * pow(10,-4) * pow(x,2) * (x / 50 - 21/5));
-            } else {
-              result = 2.966 + (0.69 * x) + (8.84 * pow(10,-4) * pow(x,2));
-            }
-            if (result <= 0.0) {
-              return 0.0;
-            } else {
-              return result;
-            }
     pm_1_0:
       name: "PM 1.0"
       id: pm_1_0
@@ -52,8 +28,8 @@ sensor:
     # Depends on another sensor providing an ID of pm_2_5 such as a pms5003
     name: "PM 2.5 AQI"
     id: pm_2_5_aqi
-    update_interval: 5 min
     device_class: aqi
+    update_interval: 5 min
     unit_of_measurement: "AQI"
     icon: "mdi:air-filter"
     accuracy_decimals: 0
