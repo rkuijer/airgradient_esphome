@@ -4,7 +4,7 @@
 output:
   - platform: gpio
     # Pin to notify external watchdog that activity is present
-    id: watchdog
+    id: hardware_watchdog
     pin:
       number: GPIO2
       ignore_strapping_warning: true  # Acknowledging that this is a strapping pin and should not have external pullup/down resistors  https://esphome.io/guides/faq.html#why-am-i-getting-a-warning-about-strapping-pins
@@ -14,6 +14,6 @@ interval:
   - interval: 2.5min
     # Notify watchdog device it is still alive
     then:
-      - output.turn_on: watchdog
+      - output.turn_on: hardware_watchdog
       - delay: 20ms
-      - output.turn_off: watchdog
+      - output.turn_off: hardware_watchdog
