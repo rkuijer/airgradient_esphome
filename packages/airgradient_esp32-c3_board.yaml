@@ -1,5 +1,5 @@
 substitutions:
-  config_version: 4.0.7
+  config_version: 5.0.0
 
 # board
 esphome:
@@ -10,17 +10,12 @@ esphome:
   project:
     name: mallocarray.airgradient
     version: "$config_version"
-  min_version: 2024.6.0
+  min_version: 2025.2.0
 
 esp32:
   board: esp32-c3-devkitm-1
-  # Testing upgrading from 5.4.0 which is current default
-  # framework:
-  #   type: arduino
-  #   version: 6.7.0
-
-# esp32_improv:  # Uses around 30% of available flash space due to loading BLE stack
-#   authorizer: none
+  framework:
+    type: esp-idf
 
 # Enable logging
 # https://esphome.io/components/logger.html
@@ -34,8 +29,8 @@ logger:
 captive_portal:
 
 # web_server:  # Please note that enabling this component will take up a lot of memory and may decrease stability, especially on ESP8266.
-web_server:
-  port: 80
+# web_server:
+#  port: 80
 
 uart:
   # https://esphome.io/components/uart.html#uart
