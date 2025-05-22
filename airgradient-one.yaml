@@ -4,7 +4,7 @@
 substitutions:
   name: "ag-one"
   friendly_name: "AG One"
-  config_version: 2.0.6
+  config_version: 5.2.1
   name_add_mac_suffix: "false"  # Must have quotes around value
   ag_esphome_config_version: config_version
   friendly_devicename: friendly_name
