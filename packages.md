@@ -56,6 +56,20 @@ binary_sensor:
 * Short press - Toggle temperature display between C and F
 * Press and hold up to 5 seconds - Initiate Senseair S8 CO2 manual calibration.  Ensure device is already outdoors or near an open window for 5+ minutes before initiating
 
+## cpu_clock_speed_80_mhz.yaml
+
+For devices that use the ESP32-C3 the CPU clock can be lowered from default 160
+MHz to 80 MHz to save power. The higher default clock is not needed for the
+calculations that even the AirGradient One by default has to do to interact
+with all the sernsors, display, LEDs and so on. If you suspect this causes
+problems, look at the ESPHome log or enable the `diagnostic_esp32.yaml` package
+and look at "Loop Time".
+
+It is currently not included by default for any AirGradient ESPHome config. If
+you want to use it, you must include the package yourself.
+
+For more details refer to the [Video from Andreas Spiess #410 Unknown ESP32 saving: Light Sleep, Clock Reduction, Modem Sleep, Hibernation, and a few tricks](https://www.youtube.com/watch?v=JFDiqPHw3Vc)
+
 ## diagnostic_esp32.yaml
 
 Enables debug sensor information for the ESP32-C3 chip that is very verbose.
@@ -74,6 +88,7 @@ Consumes more RAM than the single page config.  If having trouble with devices, 
 
 * AirGradient default page
 * Summary pages with larger font
+* Measurement values without units page with huge font: Top line: CO2, Humidity; Bottom line: PM2.5, Temperature
 * Air quality with only CO2 and PM2.5 values
 * Air temp and humidity
 * VOC and NOx values
@@ -142,6 +157,21 @@ substitutions:
   pm_2_5_purple: '201'
 ```
 
+## led_tvoc.yaml
+
+LED bar in AG ONE reflects VOC levels.
+
+Mixes colors from blue>green>purple based on numbers provided by AirGradient. The values for each color can be modified by adding a substitution section to your config.
+
+```yaml
+substitutions:
+  voc_green: '100'
+  voc_yellow: '150'
+  voc_red: '250'
+  voc_purple: '400'
+  voc_blue: '50'
+```
+
 ## led.yaml
 
 Configures the 11 segment LED bar in AG ONE models.
@@ -166,7 +196,7 @@ Configures the Plantower PMS5003 sensor.
 
 By default collects readings every second. Since this device has a limited lifespan, it is possible to extend the life by collecting readings less frequently.  Could introduce a new failure mode as the fan shuts down, allowing insects to get inside past the fan that is no longer spinning after 30 seconds.
 
-Collects readings every 2 minutes by default, but can be modifed by adding an entry under substitutions, ensuring the value is surrounded by double quotes
+Collects readings every 2 minutes by default, but can be modified by adding an entry under substitutions, ensuring the value is surrounded by double quotes
 `pm_update_interval: "2min"`
 
 ## sensor_pms5003t_2_extended_life.yaml
@@ -179,7 +209,7 @@ In addition to enabling sensors from the second device, also creates sensors tha
 
 By default collects readings every second. Since this device has a limited lifespan, it is possible to extend the life by collecting readings less frequently.  Could introduce a new failure mode as the fan shuts down, allowing insects to get inside past the fan that is no longer spinning after 30 seconds.
 
-Collects readings every 2 minutes by default, but can be modifed by adding an entry under substitutions, ensuring the value is surrounded by double quotes
+Collects readings every 2 minutes by default, but can be modified by adding an entry under substitutions, ensuring the value is surrounded by double quotes
 `pm_update_interval: "2min"`
 
 ## sensor_pms5003t_2.yaml
@@ -198,7 +228,7 @@ Also applies a compensation algorithm from AirGradient to correct temperature an
 
 By default collects readings every second. Since this device has a limited lifespan, it is possible to extend the life by collecting readings less frequently.  Could introduce a new failure mode as the fan shuts down, allowing insects to get inside past the fan that is no longer spinning after 30 seconds.
 
-Collects readings every 2 minutes by default, but can be modifed by adding an entry under substitutions, ensuring the value is surrounded by double quotes
+Collects readings every 2 minutes by default, but can be modified by adding an entry under substitutions, ensuring the value is surrounded by double quotes
 `pm_update_interval: "2min"`
 
 ## sensor_pms5003t_uncorrected.yaml

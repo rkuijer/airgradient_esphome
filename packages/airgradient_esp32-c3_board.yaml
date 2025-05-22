@@ -1,5 +1,5 @@
 substitutions:
-  config_version: 5.0.0
+  config_version: 5.2.1
 
 # board
 esphome:
@@ -10,7 +10,7 @@ esphome:
   project:
     name: mallocarray.airgradient
     version: "$config_version"
-  min_version: 2025.2.0
+  min_version: 2025.5.0
 
 esp32:
   board: esp32-c3-devkitm-1
@@ -20,20 +20,15 @@ esp32:
 # Enable logging
 # https://esphome.io/components/logger.html
 logger:
-  baud_rate: 0  # Must disable serial logging as it conflicts with pms5003 uart pins and ESP32-C3 only has 2 hardware UART
   logs:
     component: ERROR  # Hiding warning messages about component taking a long time https://github.com/esphome/issues/issues/4717
-
-# The captive portal is a fallback mechanism for when connecting to the configured WiFi fails.
-# https://esphome.io/components/captive_portal.html
-captive_portal:
 
 uart:
   # https://esphome.io/components/uart.html#uart
   - rx_pin: GPIO0  # Pin 12
     tx_pin: GPIO1  # Pin 13
     baud_rate: 9600
-    id: senseair_s8_uart
+    id: senseair_co2_uart
 
   - rx_pin: GPIO20  # Pin 30 or RX
     tx_pin: GPIO21  # Pin 31 or TX
