@@ -32,6 +32,12 @@ Board configuration for devices based on the D1 Mini chip (AG Basic and AG Pro),
 
 Board configuration for devices based on the ESP32-C3 chip (AG ONE and OpenAir) using the original Arduino framework
 
+## airgradient_lolin-c3-mini_board.yaml
+
+Board configuration for the AG DIY/Pro that has been user upgraded to use a Lolin C3 mini, such as https://www.aliexpress.us/item/3256804553736450.html
+
+If upgrading a Pro, change the `!extend config_button` section to use pin number `4` instead of `D7`
+
 ## button_factory_reset.yaml
 
 Enables a button to reset device to factory resets, which erases all nvram and erases all stored preferences.
@@ -53,6 +59,8 @@ binary_sensor:
       number: D7
 ```
 
+If using an AG Pro v4.2 with a user lolin-d3-mini upgrade use pin 4 instead of D7
+
 * Short press - Toggle temperature display between C and F
 * Press and hold up to 5 seconds - Initiate Senseair S8 CO2 manual calibration.  Ensure device is already outdoors or near an open window for 5+ minutes before initiating
 
@@ -61,7 +69,7 @@ binary_sensor:
 For devices that use the ESP32-C3 the CPU clock can be lowered from default 160
 MHz to 80 MHz to save power. The higher default clock is not needed for the
 calculations that even the AirGradient One by default has to do to interact
-with all the sernsors, display, LEDs and so on. If you suspect this causes
+with all the sensors, display, LEDs and so on. If you suspect this causes
 problems, look at the ESPHome log or enable the `diagnostic_esp32.yaml` package
 and look at "Loop Time".
 
@@ -199,6 +207,14 @@ By default collects readings every second. Since this device has a limited lifes
 Collects readings every 2 minutes by default, but can be modified by adding an entry under substitutions, ensuring the value is surrounded by double quotes
 `pm_update_interval: "2min"`
 
+Can also apply batch or device specific correction formulas. See [calibration.md](calibration.md) for more details.
+
+```yaml
+substitutions:
+  pm_2_5_scaling_factor: '1'
+  pm_2_5_intercept: '0'
+```
+
 ## sensor_pms5003t_2_extended_life.yaml
 
 Configures a second Plantower PMS5003T sensor when 2 are installed, such as the Open Air Model O-1PPT.  Reports PM2.5, Temperature, and Humidity.
@@ -211,6 +227,14 @@ By default collects readings every second. Since this device has a limited lifes
 
 Collects readings every 2 minutes by default, but can be modified by adding an entry under substitutions, ensuring the value is surrounded by double quotes
 `pm_update_interval: "2min"`
+
+Can also apply batch or device specific correction formulas. See [calibration.md](calibration.md) for more details.
+
+```yaml
+substitutions:
+  pm_2_5_scaling_factor: '1'
+  pm_2_5_intercept: '0'
+```
 
 ## sensor_pms5003t_2.yaml
 
@@ -231,6 +255,14 @@ By default collects readings every second. Since this device has a limited lifes
 Collects readings every 2 minutes by default, but can be modified by adding an entry under substitutions, ensuring the value is surrounded by double quotes
 `pm_update_interval: "2min"`
 
+Can also apply batch or device specific correction formulas. See [calibration.md](calibration.md) for more details.
+
+```yaml
+substitutions:
+  pm_2_5_scaling_factor: '1'
+  pm_2_5_intercept: '0'
+```
+
 ## sensor_pms5003t_uncorrected.yaml
 
 Configures a Plantower PMS5003T sensor.  Reports PM 2.5, Temperature, and Humidity.
@@ -242,6 +274,14 @@ Does not apply a compensation algorithm to provide values directly from the sens
 Configures a Plantower PMS5003T sensor.  Reports PM 2.5, Temperature, and Humidity.
 
 Also applies a compensation algorithm from AirGradient to correct temperature and humidity readings when used inside of the Open Air enclosure
+
+Can also apply batch or device specific correction formulas. See [calibration.md](calibration.md) for more details.
+
+```yaml
+substitutions:
+  pm_2_5_scaling_factor: '1'
+  pm_2_5_intercept: '0'
+```
 
 ## sensor_pms5003_uncorrected.yaml
 
@@ -258,6 +298,14 @@ Applies correction algorithms provided by AirGradient
 https://www.airgradient.com/documentation/correction-algorithms/
 
 Reports PM 2.5, PM 10, PM 1.0, PM 0.3, and Air Quality Index based on the current readings.
+
+Can also apply batch or device specific correction formulas. See [calibration.md](calibration.md) for more details.
+
+```yaml
+substitutions:
+  pm_2_5_scaling_factor: '1'
+  pm_2_5_intercept: '0'
+```
 
 ## sensor_s8.yaml
 

@@ -1,6 +1,6 @@
 # AirGradient ESPHome Configurations
 
-ESPHome yaml files for AirGradient devices to maintain the research and accuracy of AirGradient sensors, while also gaining the benefits of ESPHome/HomeAssistant for easy to use switches, buttons, configurations, and dashboards.  Maintains the ability to also send data to the AirGradient Dashboard, which can also be disabled/removed to keep all data local.
+ESPHome yaml files for AirGradient devices to maintain the research and accuracy of AirGradient sensors, while also gaining the benefits of ESPHome/HomeAssistant for easy to use switches, buttons, configurations, and dashboards, all controlled locally.  Maintains the ability to also send data to the AirGradient Dashboard, which can also be disabled/removed to keep all data local.
 
 <img src="image/README/1715467068556.png" width=25% height=25%>
 
@@ -8,23 +8,29 @@ ESPHome yaml files for AirGradient devices to maintain the research and accuracy
 
 ## [Configuration](/configuration.md)
 
+## [Calibration](/calibration.md)
+
+## [Packages](/packages.md)
+
+List of available packages to customize your device and gain additional features
+
 ## Breaking Changes
 
 * 5.0.0 is a major version upgrade as switching to esp-idf is not fully supported via OTA. Highly recommend doing one USB flash of 5.0.0 and later to the AirGradient ONE and OpenAir devices to reformat the storage to support esp-idf.  Future updates can be done Over-The-Air without issue.
   * If not done, the device is likely to reboot at some point and switch to the standby partition, returning to a version prior to 5.0.0
   * [Seeing an Old Firmware Version After Update? Here&#39;s Why &amp; How to Fix It · Issue #1821 · Blackymas/NSPanel_HA_Blueprint](https://github.com/Blackymas/NSPanel_HA_Blueprint/issues/1821)
   * [Read/Write bootloader, partition table and any partition via OTA by angelnu · Pull Request #5535 · esphome/esphome](https://github.com/esphome/esphome/pull/5535)
-* Aware of errors in the logs stating `esp_task_wdt_reconfigure(615): Invalid arguments`
-  * Tracking [Watchdog config hardcoded core mask · Issue #6767 · esphome/issues](https://github.com/esphome/issues/issues/6767)
-* 5.0.0 switches ONE and OpenAir models (based on ESP32) to the esp-idf framework, freeing up some memory and allowing other advanced features such as bluetooth_proxy and esp32_improv.  If the previous Arduino framework is desired, change the board to `airgradient_esp32-c3_board-arduino.yaml`
-* If attempting to add BT and BLE support, may need to remove the captive_portal package to free up enough space [Issue #115](https://github.com/MallocArray/airgradient_esphome/issues/115)
 
 ## Changes
 
-* Added optional package for using LED bar on AirGradient ONE to reflect TVOC values
-* Added examples of Home Assistant automation to disable the display and LED at a scheduled time in configuration.md
+* Added optional substitutions to implement batch-specific PM2.5 corrections using values provided by AirGradient
+  [See details in the packages.md file under the PMS5003 section.](packages.md#sensor_pms5003yaml)
+* Restored logging to default values as it no longer repeats messages about components taking too long to complete
+* New package for upgrading DIY and Pro models to Lolin C3 Mini
 
 ## Features
+
+Replacing the line that starts with `led_co2` with `  led_combo: !include packages/led_combo.yaml` enables combo LED bar.  For more information, look at the Packages file.
 
 Many added features can be found in HomeAssistant by going to Settings>Devices and selecting the AirGradient device.  Alternatively, add `web_server:` to the config file to enable a built-in web server on the AirGradient device (Not recommended for devices based on the D1 Mini ESP8266)
 
@@ -56,7 +62,7 @@ Many added features can be found in HomeAssistant by going to Settings>Devices a
 
   - Short press (Less than 1 second) - Toggle between F and C on display
   - Long press (More than 1 second, less than 5) - Trigger manual CO2 calibration
-- Leverage automation in HomeAssistant to turn on the "Blank" page and turn off all other pages to effectively disable the display output.  Could also turn off the LED strip or set Brightness to 0 to eliminate output while still collecting sensor data
+- Leverage automation in HomeAssistant to turn on the "Blank" page to effectively disable the display output.  Could also turn off the LED strip or set Brightness to 0 to eliminate output while still collecting sensor data
 
 ## Support me
 
@@ -68,4 +74,4 @@ Many added features can be found in HomeAssistant by going to Settings>Devices a
 
 More features are planned to be added to this repo
 
-- [ ] PMS5003 model specific correction algorithms
+- [ ] Deprecate Extended Life packages and use a substitution to allow for adjusting update_interval
