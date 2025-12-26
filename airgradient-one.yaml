@@ -4,25 +4,32 @@
 substitutions:
   name: "ag-one"
   friendly_name: "AG One"
-  config_version: 5.2.1
+  config_version: 5.3.3
   name_add_mac_suffix: "false"  # Must have quotes around value
   ag_esphome_config_version: config_version
   friendly_devicename: friendly_name
 
 # Enable Home Assistant API
-api:  # Add encryption key as desired
+api:
+  encryption:
+    key: !secret api_ag_one
 
 ota:
   - platform: esphome
     password: !secret esphome_ota_password
 
 wifi:
-  ssid: !secret wifi_not_ssid
+  ssid: !secret wifi_ssid
   password: !secret wifi_not_password
+  min_auth_mode: WPA2
   manual_ip:
-      static_ip: !secret ag_one_ip
-      gateway: !secret wifi_not_gateway
-      subnet: !secret wifi_not_subnet
+    static_ip: !secret ip_ag_one
+    gateway: !secret wifi_not_gateway
+    subnet: !secret wifi_not_subnet
+# Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: ${name}
+    password: !secret esphome_fallback_password
 
 dashboard_import:
   package_import_url: github://rkuijer/airgradient_esphome/airgradient-one.yaml
@@ -50,3 +57,7 @@ binary_sensor:
   - id: !extend config_button
     pin:
       ignore_strapping_warning: true  # Acknowledging that this is a strapping pin and should not have external pullup/down resistors  https://esphome.io/guides/faq.html#why-am-i-getting-a-warning-about-strapping-pins
+
+button:
+  - platform: factory_reset
+    name: "Factory Reset"
