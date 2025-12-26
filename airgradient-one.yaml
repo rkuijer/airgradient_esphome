@@ -46,7 +46,7 @@ packages:
   led:                github://rkuijer/airgradient_esphome/packages/led.yaml
   led_co2:            github://rkuijer/airgradient_esphome/packages/led_co2.yaml
   airgradient_api:    github://rkuijer/airgradient_esphome/packages/airgradient_api_esp32-c3.yaml
-  hardware_watchdog:  github://rkuijer/airgradient_esphome/packages/hardware_watchdog.yaml
+  hardware_watchdog:  github://rkuijer/airgradient_esphome/packages/watchdog.yaml
   config_button:      github://rkuijer/airgradient_esphome/packages/config_button.yaml
   wifi:               github://rkuijer/airgradient_esphome/packages/sensor_wifi.yaml
   uptime:             github://rkuijer/airgradient_esphome/packages/sensor_uptime.yaml
